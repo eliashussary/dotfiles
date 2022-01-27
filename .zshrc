@@ -1,4 +1,4 @@
 for file in ~/dotfiles/shell/*;
 do
-    source $file;
+    source $file
 done
