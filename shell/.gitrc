@@ -21,3 +21,12 @@ rebase(){
     git checkout "$target" && \
     git rebase "$source"
 }
+
+amend(){
+    if [ -z $1 ]; then
+        git commit --amend --no-edit
+        return
+    fi
+    
+    git commit --amend -m $1
+}
