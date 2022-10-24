@@ -28,3 +28,5 @@ TARGET_ZSHRC=~/.zshrc
 
 grep -qxF "$ZSHRC_LINE" $TARGET_ZSHRC || echo "$ZSHRC_LINE" >> $TARGET_ZSHRC
 
+curl https://get.volta.sh | bash
+volta install node
