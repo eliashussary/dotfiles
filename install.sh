@@ -1,4 +1,4 @@
-
+#!/bin/zsh
 # install oh-my-zsh
 if [ -z $ZSH ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -27,6 +27,3 @@ ZSHRC_LINE="source ~/dotfiles/.zshrc"
 TARGET_ZSHRC=~/.zshrc
 
 grep -qxF "$ZSHRC_LINE" $TARGET_ZSHRC || echo "$ZSHRC_LINE" >> $TARGET_ZSHRC
-
-curl https://get.volta.sh | bash
-volta install node
