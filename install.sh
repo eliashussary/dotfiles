@@ -23,7 +23,7 @@ fi
 git config --global core.editor "vim"
 
 # append the dotfile zshrc if it doesn't already exist
-ZSHRC_LINE="source ~/dotfiles/.zshrc"
+ZSHRC_LINE="source $PWD/.zshrc"
 TARGET_ZSHRC=~/.zshrc
 
 grep -qxF "$ZSHRC_LINE" $TARGET_ZSHRC || echo "$ZSHRC_LINE" >> $TARGET_ZSHRC
