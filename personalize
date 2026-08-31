@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# ~/personalize — the dex workspace template runs this each start, AFTER it has
+# installed pi (see run_personalize in enurgen/coder templates/dev/main.tf). It
+# installs my pi plugins so a lab matches my local setup.
+#
+# Keep this list in sync with the "packages" array in ~/.pi/agent/settings.json
+# on my machine (that's the source of truth for what pi loads locally).
+set -u
+
+command -v pi >/dev/null 2>&1 || { echo "personalize: pi not on PATH, skipping plugins"; exit 0; }
+
+plugins=(
+  npm:pi-web-access
+  npm:pi-subagents
+  npm:pi-mcp-adapter
+  npm:@juicesharp/rpiv-ask-user-question
+  npm:@tintinweb/pi-subagents
+  npm:@mjasnikovs/pi-task
+  npm:@juicesharp/rpiv-voice
+  npm:@dietrichgebert/ponytail
+  npm:pi-lens
+  npm:context-mode
+  npm:@juicesharp/rpiv-todo
+)
+
+# Skip ones already installed (they persist in the home volume across restarts),
+# so only a fresh lab pays the npm fetch.
+installed="$(pi list 2>/dev/null || true)"
+for p in "${plugins[@]}"; do
+  if printf '%s\n' "$installed" | grep -qF -- "${p#npm:}"; then
+    echo "personalize: present  $p"
+  else
+    echo "personalize: install  $p"
+    pi install "$p" --approve >/dev/null 2>&1 || echo "personalize: FAILED   $p (continuing)"
+  fi
+done
+echo "personalize: pi plugins ready"

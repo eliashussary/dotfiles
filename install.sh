@@ -43,3 +43,11 @@ TARGET_ZSHRC=~/.zshrc
 
 touch "$TARGET_ZSHRC"
 grep -qxF "$ZSHRC_LINE" "$TARGET_ZSHRC" || echo "$ZSHRC_LINE" >> "$TARGET_ZSHRC"
+
+# pi plugins: the dex workspace template installs pi AFTER this script runs, so
+# we cannot `pi install` here. Expose ~/personalize instead — the template runs
+# it later, once pi is on PATH (see the `personalize` script in this repo).
+if [ -f "$DOTFILES/personalize" ]; then
+    chmod +x "$DOTFILES/personalize"
+    ln -sf "$DOTFILES/personalize" "$HOME/personalize"
+fi
