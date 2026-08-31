@@ -7,6 +7,10 @@
 # on my machine (that's the source of truth for what pi loads locally).
 set -u
 
+# The template runs this in a non-login shell, so ~/.local/bin (where pi lives)
+# is not yet on PATH — add it before looking for pi.
+export PATH="$HOME/.local/bin:$PATH"
+
 command -v pi >/dev/null 2>&1 || { echo "personalize: pi not on PATH, skipping plugins"; exit 0; }
 
 plugins=(
